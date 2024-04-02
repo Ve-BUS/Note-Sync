@@ -32,6 +32,7 @@ export const AuthProvider = ({ children }) => {
 export const UserAuth = () => {
     return useContext(AuthContext);
 };
+
 const useAuth = () => {
     const [user, setUser] = useState(null);
     const router = useRouter();
@@ -46,6 +47,18 @@ const useAuth = () => {
         }
         console.log(user);
     }, []);
+
+    // useEffect(() => {
+    //     async function userStatus() {
+    //         const user = supabase.auth.getUser();
+    //         setUser(user);
+    //     }
+
+    //     window.addEventListener("hashchange", function () {
+    //         userStatus();
+    //     });
+    //     console.log("user: ", user);
+    // }, []);
 
     const googleSignIn = async () => {
         const googleProvider = new GoogleAuthProvider();
@@ -63,19 +76,35 @@ const useAuth = () => {
             });
     };
 
-    const signInGithub = () => {
-        const githubProvider = new GithubAuthProvider();
-        return signInWithPopup(auth, githubProvider)
-            .then((res) => {
-                console.log("User Signed In!!!");
-                console.log(res.user);
-                localStorage.setItem("user", JSON.stringify(res.user));
-                toast.success("Login Succes");
-                router.push("/dashboard");
-            })
-            .catch((error) => {
-                console.log(error.message);
-            });
+    const signInGithub = async () => {
+        // const githubProvider = new GithubAuthProvider();
+        // return signInWithPopup(auth, githubProvider)
+        //     .then((res) => {
+        //         console.log("User Signed In!!!");
+        //         console.log(res.user);
+        //         localStorage.setItem("user", JSON.stringify(res.user));
+        //         toast.success("Login Succes");
+        //         router.push("/dashboard");
+        //     })
+        //     .catch((error) => {
+        //         console.log(error.message);
+        //     });
+        const { data, error } = await supabase.auth.signInWithOAuth({
+            provider: "github",
+        });
+
+        // if (error) {
+        //     console.log(error);
+        // } else {
+        //     // localStorage.setItem("user", JSON.stringify(data.user));
+        //     // localStorage.setItem("session", JSON.stringify(data.session));
+        //     // setUser(data.user);
+        //     // router.push("/dashboard");
+        //     const user = await supabase.auth.getUser();
+        //     if (user) setUser(user);
+        //     localStorage.setItem("user", JSON.stringify(user));
+        //     router.push("/dashboard");
+        // }
     };
 
     const emailSignIn = async (email, password) => {
@@ -90,29 +119,26 @@ const useAuth = () => {
             password,
         });
 
-        if (error) {
-            console.error(error.message);
-            if (error.code == 404) {
-                const { data, error } = await supabase.auth.signUp({
-                    email,
-                    password,
-                });
-                console.log("Data: ", data, "\nError: ", error);
+        console.log("Data: ", data, "\nError: ", error);
 
-                if (error) {
-                    console.error(error);
-                } else {
-                    localStorage.setItem("user", JSON.stringify(data.user));
-                    localStorage.setItem(
-                        "session",
-                        JSON.stringify(data.session)
-                    );
-                    router.push("/dashboard");
-                }
+        if (error) {
+            const { data, error } = await supabase.auth.signUp({
+                email,
+                password,
+            });
+
+            if (error) {
+                console.error(error);
+            } else {
+                localStorage.setItem("user", JSON.stringify(data.user));
+                localStorage.setItem("session", JSON.stringify(data.session));
+                setUser(data.user);
+                router.push("/dashboard");
             }
         } else {
             localStorage.setItem("user", JSON.stringify(data.user));
             localStorage.setItem("session", JSON.stringify(data.session));
+            setUser(data.user);
             router.push("/dashboard");
         }
         // } catch (signInError) {
@@ -144,7 +170,7 @@ const useAuth = () => {
             console.log("User Signed Out!!!");
             toast.success("Logout Successful");
             supabase.auth.signOut();
-            localStorage.removeItem("user");
+            localStorage.clear();
             setUser(null);
             router.push("/");
         });
