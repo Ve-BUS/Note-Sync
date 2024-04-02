@@ -3,7 +3,8 @@ import React, { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { MdKeyboardArrowDown, MdOutlineNotifications } from "react-icons/md";
 
-const Navbar = () => {
+const Navbar = () =>
+{
     const { user, signOut } = UserAuth();
     const [display, setDisplay] = useState(false);
     console.log(user);
@@ -36,7 +37,7 @@ const Navbar = () => {
                         className="h-8 w-8 rounded-full"
                     />
                     <span className="w-20 text-ellipsis font-medium text-gray-800 mb-0">
-                        {user ? user.displayName?.split(" ")[0] : "Lorem"}
+                        {user ? user.name.split(" ")[0] : "Lorem"}
                     </span>
                     <MdKeyboardArrowDown />
                 </button>

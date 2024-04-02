@@ -12,7 +12,8 @@ import { useTheme } from "next-themes";
 
 const outfit = Outfit({ subsets: ["latin"] });
 
-export default function Home() {
+export default function Home()
+{
     const { theme, setTheme } = useTheme();
     const { user, setUser, googleSignIn, signInGithub, emailSignIn } =
         UserAuth();
@@ -20,21 +21,26 @@ export default function Home() {
     const [password, setPassword] = useState("");
     const router = useRouter();
 
-    const handleGoogleSignIn = () => {
+    const handleGoogleSignIn = () =>
+    {
         googleSignIn();
     };
-    const handleGithubSignIn = () => {
+    const handleGithubSignIn = () =>
+    {
         signInGithub();
     };
 
-    const handleEmailSignIn = () => {
+    const handleEmailSignIn = () =>
+    {
         emailSignIn(email, password);
     };
 
-    useEffect(() => {
+    useEffect(() =>
+    {
         localStorage.getItem("user") &&
             setUser(JSON.parse(localStorage.getItem("user")));
-        if (user) {
+        if (user)
+        {
             router.push("/dashboard");
         }
         console.log(user);
@@ -71,7 +77,7 @@ export default function Home() {
                     <div className="form mt-8">
                         <div className="mb-6">
                             <label
-                                for="email"
+                                htmlFor="email"
                                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                             >
                                 Email
@@ -88,7 +94,7 @@ export default function Home() {
                         </div>
                         <div className="mb-6">
                             <label
-                                for="password"
+                                htmlFor="password"
                                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                             >
                                 Password

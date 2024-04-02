@@ -14,19 +14,24 @@ import { initialData } from "@/src/constants/data";
 import { useRouter } from "next/router";
 import useNotesStore from "@/src/store/notesStore";
 import { Outfit } from "next/font/google";
+import { supabase } from "../utils/supabase";
 
 const outfit = Outfit({ subsets: ["latin"] });
-const Dashboard = () => {
+const Dashboard = () =>
+{
     const router = useRouter();
     const { user, setUser, signOut } = UserAuth();
     const { notes, category, setNotes } = useNotesStore();
     const [notesData, setNotesData] = useState([]);
 
-    useEffect(() => {
+    useEffect(() =>
+    {
         console.log(user);
-        const fetchData = async () => {
+        const fetchData = async () =>
+        {
             console.log(user);
-            if (user) {
+            if (user)
+            {
                 const res = await axios.get(
                     `${publicUrl()}/get-notes/${user.uid}`
                 );
@@ -38,11 +43,23 @@ const Dashboard = () => {
         };
 
         fetchData();
+        session();
     }, []);
 
-    const handleNewNote = async () => {
+    const session = async () =>
+    {
+        const { data: { user: { user_metadata: user } } } = await supabase.auth.getUser();
+        console.log(user);
+        localStorage.setItem("user", JSON.stringify(user));
+        setUser(user);
+
+    };
+
+    const handleNewNote = async () =>
+    {
         const docId = Math.floor(Math.random() * 10000000);
-        try {
+        try
+        {
             const res = await axios.post(`${publicUrl()}/note`, {
                 docId: docId.toString(),
                 title: "New Note",
@@ -53,16 +70,19 @@ const Dashboard = () => {
             });
             console.log(res);
             router.push(`/edit/${docId}`);
-        } catch (error) {
+        } catch (error)
+        {
             console.log(error);
             return;
         }
     };
 
     //handle filter
-    useEffect(() => {
+    useEffect(() =>
+    {
         if (!category) return setNotesData(notes);
-        const filterNotes = async () => {
+        const filterNotes = async () =>
+        {
             //filter notes array
             const filteredNotes = await notes.filter(
                 (note) => note.category === category.title
@@ -99,7 +119,8 @@ const Dashboard = () => {
                                     </p>
                                 </div>
                             </button>
-                            {notesData.map((note) => {
+                            {notesData.map((note) =>
+                            {
                                 return (
                                     <Card
                                         key={note._id}
