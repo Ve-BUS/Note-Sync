@@ -23,12 +23,12 @@ const Dashboard = () => {
     const [notesData, setNotesData] = useState([]);
 
     useEffect(() => {
-        console.log(user);
+        console.log("Dashboard/ USER: ", user);
         const fetchData = async () => {
             console.log(user);
             if (user) {
                 const res = await axios.get(
-                    `${publicUrl()}/get-notes/${user.uid}`
+                    `${publicUrl()}/get-notes/${user.id}`
                 );
                 const data = await res.data;
                 console.log(data);
@@ -47,7 +47,7 @@ const Dashboard = () => {
                 docId: docId.toString(),
                 title: "New Note",
                 content: initialData,
-                uid: user.uid,
+                uid: user.id,
                 category: "frontend",
                 tags: ["tag"],
             });
