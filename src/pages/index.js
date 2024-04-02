@@ -46,6 +46,19 @@ export default function Home()
         console.log(user);
     }, []);
 
+    useEffect(() => {
+        try {
+            const data = JSON.parse(
+                localStorage.getItem(
+                    `sb-${process.env.NEXT_PUBLIC_SUPABASE_PROJECT_ID}-auth-token`
+                )
+            ).then((res) => res);
+            console.log("DATA: ", data);
+        } catch (error) {
+            console.error(error);
+        }
+    }, []);
+
     return (
         <main className={`w-screen flex ${outfit.className}`}>
             <Toaster position="top-center" reverseOrder={false} />

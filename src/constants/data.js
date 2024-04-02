@@ -1,52 +1,58 @@
-import { HiOutlineHome, HiOutlineFolderDownload, HiOutlineStar, HiOutlineCog } from "react-icons/hi";
+import {
+    HiOutlineHome,
+    HiOutlineFolderDownload,
+    HiOutlineStar,
+    HiOutlineCog,
+    HiUpload,
+} from "react-icons/hi";
 import { HiMiniHashtag } from "react-icons/hi2";
 
 export const navList = [
-    { title: "Dashboard", icon: <HiOutlineHome className='text-xl' /> },
-    { title: "Important", icon: <HiOutlineStar className='text-xl' /> },
-    { title: "Archive", icon: <HiOutlineFolderDownload className='text-xl' /> },
-    { title: "Tags", icon: <HiMiniHashtag className='text-xl' /> },
-    { title: "Settings", icon: <HiOutlineCog className='text-xl' /> },
+    { title: "Dashboard", icon: <HiOutlineHome className="text-xl" /> },
+    { title: "Important", icon: <HiOutlineStar className="text-xl" /> },
+    { title: "Upload", icon: <HiUpload className="text-xl" /> },
+    { title: "Files", icon: <HiOutlineFolderDownload className="text-xl" /> },
+    { title: "Tags", icon: <HiMiniHashtag className="text-xl" /> },
+    { title: "Settings", icon: <HiOutlineCog className="text-xl" /> },
 ];
-
 
 export const categories = [
     {
-        "color": "bg-red-500",
-        "title": "ui"
+        color: "bg-red-500",
+        title: "ui",
     },
     {
-        "color": "bg-yellow-500",
-        "title": "ux"
+        color: "bg-yellow-500",
+        title: "ux",
     },
     {
-        "color": "bg-green-500",
-        "title": "frontend"
+        color: "bg-green-500",
+        title: "frontend",
     },
     {
-        "color": "bg-blue-500",
-        "title": "backend"
+        color: "bg-blue-500",
+        title: "backend",
     },
     {
-        "color": "bg-indigo-500",
-        "title": "fullstack"
+        color: "bg-indigo-500",
+        title: "fullstack",
     },
     {
-        "color": "bg-purple-500",
-        "title": "devops"
+        color: "bg-purple-500",
+        title: "devops",
     },
     {
-        "color": "bg-pink-500",
-        "title": "testing"
+        color: "bg-pink-500",
+        title: "testing",
     },
     {
-        "color": "bg-teal-500",
-        "title": "design"
+        color: "bg-teal-500",
+        title: "design",
     },
     {
-        "color": "bg-red-500",
-        "title": "security"
-    }
+        color: "bg-red-500",
+        title: "security",
+    },
 ];
 
 export const names = [
@@ -228,18 +234,16 @@ export const names = [
     // ... (more names)
 ];
 
-export const initialData =
-    [
-        {
-            "id": "heading-1",
-            "type": "heading",
-            "content": "New Note",
-        },
-        {
-            "id": "paragraph-1",
-            "type": "paragraph",
-            "content": "Type here..",
-        }
-
-    ];
+export const initialData = [
+    {
+        id: "heading-1",
+        type: "heading",
+        content: "New Note",
+    },
+    {
+        id: "paragraph-1",
+        type: "paragraph",
+        content: "Type here..",
+    },
+];
 // Feel free to use or modify this array as needed.
