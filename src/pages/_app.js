@@ -1,4 +1,4 @@
-import "@/styles/globals.css";
+import "@/src/styles/globals.css";
 import { AuthProvider } from "@/src/utils/auth";
 import { ThemeProvider } from "next-themes";
 
