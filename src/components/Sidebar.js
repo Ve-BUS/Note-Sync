@@ -5,14 +5,16 @@ import { HiMenuAlt3, HiMoon, HiSun } from "react-icons/hi";
 import { HiMiniMoon } from "react-icons/hi2";
 import { useTheme } from "next-themes";
 
-const Sidebar = () => {
+const Sidebar = () =>
+{
     const [closed, setClosed] = React.useState(false);
 
     // theme
     const { theme, setTheme } = useTheme();
     console.log(theme);
 
-    const changeTheme = () => {
+    const changeTheme = () =>
+    {
         setTheme(theme === "light" ? "dark" : "light");
     };
 
@@ -20,11 +22,13 @@ const Sidebar = () => {
         <div className="w-[260px] bg-white dark:bg-gray-900 h-screen rounded-md flex flex-col justify-between">
             <div className="top">
                 <div className="logo flex justify-between py-4 items-center transition-all">
-                    <div
-                        className={` text-slate-900 dark:text-gray-200 font-mulish ml-6 font-semibold text-2xl`}
-                    >
-                        NoteSync
-                    </div>
+                    <Link href="/dashboard">
+                        <div
+                            className={` text-slate-900 dark:text-gray-200 font-mulish ml-6 font-semibold text-2xl`}
+                        >
+                            NoteSync
+                        </div>
+                    </Link>
 
                     <span
                         onClick={() => setClosed(!closed)}

@@ -5,9 +5,9 @@ import { MdKeyboardArrowDown, MdOutlineNotifications } from "react-icons/md";
 
 const Navbar = () =>
 {
-    const { user, signOut } = UserAuth();
+    const { user: { user_metadata: user }, signOut } = UserAuth();
     const [display, setDisplay] = useState(false);
-    console.log(user);
+
     return (
         <header className="p-3  flex justify-between bg-gray-50 dark:bg-gray-800">
             <div className="relative flex items-center lg:w-1/4 h-10 rounded-full focus-within:ring-1 border border-gray-400 focus:ring-blue-500 bg-white  dark:bg-gray-900 overflow-hidden">

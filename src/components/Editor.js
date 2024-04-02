@@ -5,12 +5,15 @@ import { MdEdit, MdSave } from "react-icons/md";
 import publicUrl from "@/src/utils/publicUrl";
 import React from "react";
 import axios from "axios";
+import { Toaster, toast } from "react-hot-toast";
+
 import EditorSidebar from "./EditorSidebar";
 import EditorInfo from "./EditorInfo";
 import EditorNav from "./EditorNav";
 import { HiDotsVertical } from "react-icons/hi";
 import YPartyKitProvider from "y-partykit/provider";
-import {
+import
+{
     BlockNoteView,
     SideMenu,
     useBlockNote,
@@ -26,14 +29,16 @@ import Navbar from "./Navbar";
 import { markdownToPlainText } from "../utils/markdown_to_text";
 
 // Our <Editor> component we can reuse later
-export default function Editor({ data, id }) {
+export default function Editor({ data, id })
+{
     //theme
 
     const { theme } = useTheme();
 
     //content is the doc where docId == id
     const content = data.content;
-    const initData = content.map((block) => {
+    const initData = content.map((block) =>
+    {
         console.log(block.content);
         return {
             id: `${block.id}`,
@@ -55,7 +60,8 @@ export default function Editor({ data, id }) {
         doc
     );
 
-    provider.on("synced", (synced) => {
+    provider.on("synced", (synced) =>
+    {
         console.log("synced", synced);
     });
 
@@ -68,7 +74,8 @@ export default function Editor({ data, id }) {
             // Information (name and color) for this user:
             user: getRandomUser(),
         },
-        onEditorContentChange: (editor) => {
+        onEditorContentChange: (editor) =>
+        {
             //To handkle changes
             console.log(provider);
             return;
@@ -89,7 +96,8 @@ export default function Editor({ data, id }) {
         },
     };
 
-    const handleSave = async () => {
+    const handleSave = async () =>
+    {
         // const note = localStorage.getItem("editorContent");
         console.log(editor.topLevelBlocks);
         console.log(
@@ -100,7 +108,7 @@ export default function Editor({ data, id }) {
         // const content = editor.topLevelBlocks.find((block) => block.type === "paragraph").content[0].text;
         const md = await editor.blocksToMarkdownLossy(editor.topLevelBlocks);
         const preview = markdownToPlainText(md);
-        const res = axios.put(`${publicUrl()}/note/${id}`, {
+        const res = await axios.put(`${publicUrl()}/note/${id}`, {
             title:
                 editor.topLevelBlocks.find((block) => block.type === "heading")
                     .content[0].text || "Untitled",
@@ -110,6 +118,7 @@ export default function Editor({ data, id }) {
         // console.log(note);
         console.log("saved");
         console.log(editor.topLevelBlocks);
+        toast.success("Saved Successfully");
     };
 
     // Renders the editor instance using a React component.
@@ -118,6 +127,7 @@ export default function Editor({ data, id }) {
             <main
                 className={`conatiner flex bg-white h-screen dark:bg-gray-800 `}
             >
+                <Toaster position="top-center" reverseOrder={false} />
                 <Sidebar />
                 <div className="flex-1 overflow-y-scroll border-l-2 border-gray-200 dark:border-gray-600">
                     {/* <Navbar /> */}
@@ -150,7 +160,7 @@ export default function Editor({ data, id }) {
                         </div>
                     </div>
                 </div>
-            </main>
+            </main >
         )
     );
 }

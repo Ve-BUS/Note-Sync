@@ -24,10 +24,12 @@ const Dashboard = () =>
     const { notes, category, setNotes } = useNotesStore();
     const [notesData, setNotesData] = useState([]);
 
-    
-    useEffect(() => {
+
+    useEffect(() =>
+    {
         console.log("Dashboard/ USER: ", user);
-        const fetchData = async () => {
+        const fetchData = async () =>
+        {
             console.log(user);
             if (user)
             {
@@ -47,7 +49,7 @@ const Dashboard = () =>
 
     const session = async () =>
     {
-        const { data: { user: { user_metadata: user } } } = await supabase.auth.getUser();
+        const { data: { user } } = await supabase.auth.getUser();
         console.log(user);
         localStorage.setItem("user", JSON.stringify(user));
         setUser(user);

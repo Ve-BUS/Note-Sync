@@ -33,7 +33,8 @@ export const UserAuth = () =>
     return useContext(AuthContext);
 };
 
-const useAuth = () => {
+const useAuth = () =>
+{
     const [user, setUser] = useState(null);
     const router = useRouter();
 
@@ -76,12 +77,12 @@ const useAuth = () => {
             provider: "google",
             options: {
 
-                redirectTo: "http://localhost:3000/dashboard",
-                
-                
-                
+                redirectTo: `${origin}/dashboard`,
+
+
+
             },
-            
+
         });
 
         // localStorage.setItem("user", JSON.stringify(data.user));
@@ -90,7 +91,8 @@ const useAuth = () => {
 
     };
 
-    const signInGithub = async () => {
+    const signInGithub = async () =>
+    {
         // const githubProvider = new GithubAuthProvider();
         // return signInWithPopup(auth, githubProvider)
         //     .then((res) => {
@@ -105,6 +107,9 @@ const useAuth = () => {
         //     });
         const { data, error } = await supabase.auth.signInWithOAuth({
             provider: "github",
+            options: {
+                redirectTo: `${origin}/dashboard`,
+            }
         });
 
         // if (error) {
@@ -136,15 +141,18 @@ const useAuth = () => {
 
         console.log("Data: ", data, "\nError: ", error);
 
-        if (error) {
+        if (error)
+        {
             const { data, error } = await supabase.auth.signUp({
                 email,
                 password,
             });
 
-            if (error) {
+            if (error)
+            {
                 console.error(error);
-            } else {
+            } else
+            {
                 localStorage.setItem("user", JSON.stringify(data.user));
                 localStorage.setItem("session", JSON.stringify(data.session));
                 setUser(data.user);
