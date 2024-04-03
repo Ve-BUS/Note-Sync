@@ -15,6 +15,7 @@ import { useRouter } from "next/router";
 import useNotesStore from "@/src/store/notesStore";
 import { Outfit } from "next/font/google";
 import { supabase } from "../utils/supabase";
+import { generateUniqueId } from "../utils/utils";
 
 const outfit = Outfit({ subsets: ["latin"] });
 const Dashboard = () =>
@@ -58,7 +59,7 @@ const Dashboard = () =>
 
     const handleNewNote = async () =>
     {
-        const docId = Math.floor(Math.random() * 10000000);
+        const docId = generateUniqueId();
         try
         {
             const res = await axios.post(`${publicUrl()}/note`, {

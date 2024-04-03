@@ -3,7 +3,7 @@ import { getRandomUser } from "@/src/utils/randomuser";
 import Link from "next/link";
 import { MdEdit, MdSave } from "react-icons/md";
 import publicUrl from "@/src/utils/publicUrl";
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { Toaster, toast } from "react-hot-toast";
 
@@ -29,42 +29,40 @@ import Navbar from "./Navbar";
 import { markdownToPlainText } from "../utils/markdown_to_text";
 
 // Our <Editor> component we can reuse later
-export default function Editor({ data, id })
+export default function Editor({ data, id, pagetalk = false })
 {
     //theme
 
-    const { theme } = useTheme();
 
-    //content is the doc where docId == id
-    const content = data.content;
-    const initData = content.map((block) =>
-    {
-        console.log(block.content);
-        return {
-            id: `${block.id}`,
-            type: `${block.type}`,
-            props: block.props,
-            content:
-                `${block.content[0]?.text !== undefined ? block.content[0]?.text : ""}` ||
-                [],
-            children: [],
-        };
-    });
-    // console.log("initData", initData);
+    let initData;
+
     const doc = new Y.Doc();
-    //     const provider = new WebsocketProvider(`wss://websocket-im9l.onrender.com`, `room-${id}`, doc);
-
     const provider = new YPartyKitProvider(
         "https://frontend-party.techymt.partykit.dev",
         `room-${id}`,
         doc
     );
+    const { theme } = useTheme();
+    // const [editor, setEditor] = useState(null);
+    const content = data.content;
+    console.log(content);
 
-    provider.on("synced", (synced) =>
+    if (!pagetalk)
     {
-        console.log("synced", synced);
-    });
-
+        initData = content.map((block) =>
+        {
+            console.log(block.content);
+            return {
+                id: `${block.id}`,
+                type: `${block.type}`,
+                props: block.props,
+                content:
+                    `${block.content[0]?.text !== undefined ? block.content[0]?.text : ""}` ||
+                    [],
+                children: [],
+            };
+        });
+    }
     const editor = useBlockNote({
         initialContent: initData,
         collaboration: {
@@ -77,12 +75,35 @@ export default function Editor({ data, id })
         onEditorContentChange: (editor) =>
         {
             //To handkle changes
-            console.log(provider);
+            // console.log(provider);
+            // console.log(editor.topLevelBlocks);
             return;
         },
     });
 
-    //Theme
+    const convertToBlock = async (data) =>
+    {
+        const blocks = await editor.tryParseMarkdownToBlocks(data);
+        blocks.push({
+            id: "heading-1",
+            type: "heading",
+            props: {
+                "textColor": "default",
+                "backgroundColor": "default",
+                "textAlignment": "left",
+                "level": 1
+            },
+            content: "New Note",
+        });
+        console.log("blocks", blocks);
+        editor.replaceBlocks(editor.topLevelBlocks, blocks);
+    };
+
+    if (pagetalk)
+    {
+        convertToBlock(content[0]);
+    }
+
     const darkRedTheme = {
         ...darkDefaultTheme,
         colors: {
