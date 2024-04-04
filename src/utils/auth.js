@@ -61,7 +61,7 @@ const useAuth = () => {
         const { data, error } = await supabase.auth.signInWithOAuth({
             provider: "google",
             options: {
-                redirectTo: `${origin}/dashboard`,
+                redirectTo: `https://impetus-notes-sync.vercel.app/dashboard`,
             },
         });
 

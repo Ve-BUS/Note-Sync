@@ -20,7 +20,8 @@ export default async function handler(req, res)
         category: "frontend",
         tags: ["tag"],
       });
-      console.log(response);
+
+      console.log(response.data);
       // router.push(`/edit/${docId}`);
       res.status(201).json({
         message: "created a new note",
