@@ -20,13 +20,11 @@ export default async function handler(req, res)
         category: "frontend",
         tags: ["tag"],
       });
-
-      console.log(response.data);
-      // router.push(`/edit/${docId}`);
-      res.status(201).json({
-        message: "created a new note",
-        url: `https://notesync-app.vercel.app/pagetalk/${docId}`
-      });
+      if (response.status === 201)
+        res.status(201).json({
+          message: "created a new note",
+          url: `https://impetus-notes-sync.vercel.app/pagetalk/${docId}`
+        });
     } catch (error)
     {
       console.log(error);
