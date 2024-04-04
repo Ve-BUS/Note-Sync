@@ -7,9 +7,9 @@ import { UserAuth } from "../utils/auth";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import "react-pdf/dist/esm/Page/TextLayer.css";
 
-import { extractFileName } from "@/src/lib/utils";
+import { extractFileName } from "../lib/utils";
 
-import { Button } from "@/src/components/ui/button";
+import { Button } from "./ui/button";
 
 // interface FileObject {
 //     file: File;

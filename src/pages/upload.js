@@ -1,6 +1,6 @@
 "use client";
 
-import FileUpload from "@/src/components/FileUpload";
+import FileUpload from "../components/FileUpload";
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
 // import { Separator } from "@/components/ui/separator";

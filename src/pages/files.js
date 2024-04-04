@@ -1,30 +1,32 @@
+'use client';
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 // import { Spinner } from "@nextui-org/react";
 import Loading from "../components/Loading";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import PDFCard from "@/src/components/PDFCard";
-import { Separator } from "@/src/components/ui/separator";
-import {
-    AvatarImage,
-    AvatarFallback,
-    Avatar,
-} from "@/src/components/ui/avatar";
-import { Button } from "@/src/components/ui/button";
-import { Input } from "@/src/components/ui/input";
-import { SmileIcon } from "@/src/components/ui/icons";
-import {
-    ResizableHandle,
-    ResizablePanel,
-    ResizablePanelGroup,
-} from "@/src/components/ui/resizable";
+import PDFCard from "../components/PDFCard";
+import { Separator } from "../components/ui/separator";
+import
+    {
+        AvatarImage,
+        AvatarFallback,
+        Avatar,
+    } from "../components/ui/avatar";
+import { Button } from "../components/ui/button";
+import { Input } from "../components/ui/input";
+import { SmileIcon } from "../components/ui/icons";
+import
+    {
+        ResizableHandle,
+        ResizablePanel,
+        ResizablePanelGroup,
+    } from "../components/ui/resizable";
 
-// import { useAppContext } from "@/state/appState";
-// import useDocStore from "@/zustand/docs/store";
-import { extractFileNameFromPath } from "@/src/lib/utils";
+import { extractFileNameFromPath } from "../lib/utils";
 
-function Documents() {
+function Documents()
+{
     // const { dispatch } = useAppContext();
     const router = useRouter();
     // const { docs } = useDocStore();
@@ -33,7 +35,8 @@ function Documents() {
     const [currentlySelectedDoc, setCurrentlySelectedDoc] = useState(null);
     const [apiInProgress, setApiInProgress] = useState(false);
 
-    const handleChatPressed = (pdf_id, pdf_url, pdf_name) => {
+    const handleChatPressed = (pdf_id, pdf_url, pdf_name) =>
+    {
         setCurrentlySelectedDoc({
             id: pdf_id,
             url: pdf_url,
@@ -49,11 +52,14 @@ function Documents() {
         // });
     };
 
-    useEffect(() => {
+    useEffect(() =>
+    {
         setApiInProgress(true);
-        const fetchDocs = async () => {
+        const fetchDocs = async () =>
+        {
             const { data, error } = await supabase.from("pdf").select("*");
-            if (error) {
+            if (error)
+            {
                 console.log(error);
                 return;
             }
@@ -90,22 +96,22 @@ function Documents() {
                             </div>
                             <Separator className="my-4" />
                             <div
-                                className={`grid grid-cols-1 sm:grid-cols-2 ${
-                                    currentlySelectedDoc
+                                className={`grid grid-cols-1 sm:grid-cols-2 ${currentlySelectedDoc
                                         ? "lg:grid-cols-2"
                                         : "lg:grid-cols-4"
-                                } items-center`}
+                                    } items-center`}
                             >
                                 {apiInProgress ? (
                                     <div className="items-center justify-center p-5">
                                         <Loading />
                                     </div>
-                                ) : docs.data.length === 0 ? (
+                                ) : docs?.data.length === 0 ? (
                                     <p className="text-center text-default-500">
                                         No PDFs uploaded yet
                                     </p>
                                 ) : (
-                                    docs.map((pdf) => {
+                                    docs?.map((pdf) =>
+                                    {
                                         return (
                                             <PDFCard
                                                 key={pdf.id}

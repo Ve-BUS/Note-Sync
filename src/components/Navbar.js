@@ -5,7 +5,8 @@ import { MdKeyboardArrowDown, MdOutlineNotifications } from "react-icons/md";
 
 const Navbar = () =>
 {
-    const { user: { user_metadata: user }, signOut } = UserAuth();
+    const { user, signOut } = UserAuth();
+    
     const [display, setDisplay] = useState(false);
 
     return (
@@ -37,7 +38,7 @@ const Navbar = () =>
                         className="h-8 w-8 rounded-full"
                     />
                     <span className="w-20 text-ellipsis font-medium text-gray-800 mb-0">
-                        {user ? user.name.split(" ")[0] : "Lorem"}
+                        {user ? user.user_metadata.name.split(" ")[0] : "Lorem"}
                     </span>
                     <MdKeyboardArrowDown />
                 </button>
