@@ -29,7 +29,7 @@ import Navbar from "./Navbar";
 import { markdownToPlainText } from "../utils/markdown_to_text";
 
 // Our <Editor> component we can reuse later
-export default function Editor({ data, id, user_id, pagetalk = false })
+export default function Editor({ data, id, user_id, pagetalk = false, voicesync = false })
 {
     //theme
 
@@ -47,7 +47,7 @@ export default function Editor({ data, id, user_id, pagetalk = false })
     const content = data.content;
     console.log(content);
 
-    if (!pagetalk)
+    if (!pagetalk && !voicesync)
     {
         initData = content.map((block) =>
         {
@@ -63,6 +63,8 @@ export default function Editor({ data, id, user_id, pagetalk = false })
             };
         });
     }
+
+
     const editor = useBlockNote({
         initialContent: initData,
         collaboration: {
@@ -100,6 +102,11 @@ export default function Editor({ data, id, user_id, pagetalk = false })
     };
 
     if (pagetalk)
+    {
+        convertToBlock(content[0]);
+    }
+
+    if (voicesync)
     {
         convertToBlock(content[0]);
     }
