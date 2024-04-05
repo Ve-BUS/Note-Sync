@@ -43,7 +43,7 @@ const Dashboard = () =>
                 setNotesData(data);
             }
         };
-        session().then(() =>
+        session()?.then(() =>
         {
             fetchData();
         });
