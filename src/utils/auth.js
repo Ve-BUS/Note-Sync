@@ -70,7 +70,7 @@ const useAuth = () =>
         const { data, error } = await supabase.auth.signInWithOAuth({
             provider: "google",
             options: {
-                redirectTo: `https://impetus-notes-sync.vercel.app/dashboard`,
+                redirectTo: `${origin}/dashboard`,
             },
         });
 
@@ -127,12 +127,12 @@ const useAuth = () =>
             password,
         });
 
-        console.log(res);
-        const { user, session } = res.data;
-        localStorage.setItem("user", JSON.stringify(user));
-        localStorage.setItem("session", JSON.stringify(session));
-        setUser(user);
+        console.log(res.data);
+        // localStorage.setItem("session", JSON.stringify(session));
+        localStorage.setItem("user", JSON.stringify(res.data.user));
+        setUser(res.data.user);
         router.push("/dashboard");
+
 
 
 

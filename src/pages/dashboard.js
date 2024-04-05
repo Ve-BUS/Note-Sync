@@ -43,9 +43,10 @@ const Dashboard = () =>
                 setNotesData(data);
             }
         };
-
-        fetchData();
-        session();
+        session().then(() =>
+        {
+            fetchData();
+        });
     }, []);
 
     const session = async () =>
@@ -99,7 +100,7 @@ const Dashboard = () =>
 
     return (
         <>
-            {user ? (
+            {user && notes ? (
                 <main
                     className={`${outfit.className} conatiner flex bg-gray-100 h-screen dark:bg-gray-800 `}
                 >
@@ -121,7 +122,7 @@ const Dashboard = () =>
                                     </p>
                                 </div>
                             </button>
-                            {notesData.map((note) =>
+                            {notesData && notesData.map((note) =>
                             {
                                 return (
                                     <Card
