@@ -1,49 +1,58 @@
-import {
-    useEffect,
-    useState,
-    createContext,
-    Children,
-    useContext,
-} from "react";
+import
+    {
+        useEffect,
+        useState,
+        createContext,
+        Children,
+        useContext,
+    } from "react";
 import { auth } from "./firebase";
-import {
-    GithubAuthProvider,
-    GoogleAuthProvider,
-    createUserWithEmailAndPassword,
-    signInWithEmailAndPassword,
-    signInWithPopup,
-} from "firebase/auth";
+import
+    {
+        GithubAuthProvider,
+        GoogleAuthProvider,
+        createUserWithEmailAndPassword,
+        signInWithEmailAndPassword,
+        signInWithPopup,
+    } from "firebase/auth";
 import { useRouter } from "next/router";
 import { toast } from "react-hot-toast";
 import { supabase } from "./supabase";
 
 export const AuthContext = createContext();
 
-export const AuthProvider = ({ children }) => {
+export const AuthProvider = ({ children }) =>
+{
     const auth = useAuth();
     return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>;
 };
 
-export const UserAuth = () => {
+export const UserAuth = () =>
+{
     return useContext(AuthContext);
 };
 
-const useAuth = () => {
+const useAuth = () =>
+{
     const [user, setUser] = useState(null);
     const router = useRouter();
 
-    useEffect(() => {
+    useEffect(() =>
+    {
         const localUser = JSON.parse(localStorage.getItem("user"));
-        if (localUser) {
+        if (localUser)
+        {
             setUser(localUser);
         }
-        if (user) {
+        if (user)
+        {
             router.push("/dashboard");
         }
         console.log(user);
     }, []);
 
-    const googleSignIn = async () => {
+    const googleSignIn = async () =>
+    {
         // const googleProvider = new GoogleAuthProvider();
         // return signInWithPopup(auth, googleProvider)
         //     .then((res) => {
@@ -70,7 +79,8 @@ const useAuth = () => {
         // router.push("/dashboard");
     };
 
-    const signInGithub = async () => {
+    const signInGithub = async () =>
+    {
         // const githubProvider = new GithubAuthProvider();
         // return signInWithPopup(auth, githubProvider)
         //     .then((res) => {
@@ -104,7 +114,8 @@ const useAuth = () => {
         // }
     };
 
-    const emailSignIn = async (email, password) => {
+    const emailSignIn = async (email, password) =>
+    {
         // try {
         // // Try to sign in the user
         // const userCredential = await signInWithEmailAndPassword(auth, email, password);
@@ -114,30 +125,35 @@ const useAuth = () => {
         const { data, error } = await supabase.auth.signInWithPassword({
             email,
             password,
+            options: {
+                redirectTo: `${origin}/dashboard`,
+            }
         });
 
-        console.log("Data: ", data, "\nError: ", error);
 
-        if (error) {
-            const { data, error } = await supabase.auth.signUp({
-                email,
-                password,
-            });
 
-            if (error) {
-                console.error(error);
-            } else {
-                localStorage.setItem("user", JSON.stringify(data.user));
-                localStorage.setItem("session", JSON.stringify(data.session));
-                setUser(data.user);
-                router.push("/dashboard");
-            }
-        } else {
-            localStorage.setItem("user", JSON.stringify(data.user));
-            localStorage.setItem("session", JSON.stringify(data.session));
-            setUser(data.user);
-            router.push("/dashboard");
-        }
+        // console.log("Data: ", data, "\nError: ", error);
+
+        // if (error) {
+        //     const { data, error } = await supabase.auth.signUp({
+        //         email,
+        //         password,
+        //     });
+
+        //     if (error) {
+        //         console.error(error);
+        //     } else {
+        //         localStorage.setItem("user", JSON.stringify(data.user));
+        //         localStorage.setItem("session", JSON.stringify(data.session));
+        //         setUser(data.user);
+        //         router.push("/dashboard");
+        //     }
+        // } else {
+        //     localStorage.setItem("user", JSON.stringify(data.user));
+        //     localStorage.setItem("session", JSON.stringify(data.session));
+        //     setUser(data.user);
+        //     router.push("/dashboard");
+        // }
         // } catch (signInError) {
         //     // If user is not found, sign up the user
         //     if (signInError.code === "auth/user-not-found") {
@@ -162,8 +178,10 @@ const useAuth = () => {
         // }
     };
 
-    const signOut = () => {
-        return auth.signOut().then(() => {
+    const signOut = () =>
+    {
+        return auth.signOut().then(() =>
+        {
             console.log("User Signed Out!!!");
             toast.success("Logout Successful");
             supabase.auth.signOut();
