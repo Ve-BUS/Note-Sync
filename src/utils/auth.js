@@ -1,20 +1,20 @@
 import
-    {
-        useEffect,
-        useState,
-        createContext,
-        Children,
-        useContext,
-    } from "react";
+{
+    useEffect,
+    useState,
+    createContext,
+    Children,
+    useContext,
+} from "react";
 import { auth } from "./firebase";
 import
-    {
-        GithubAuthProvider,
-        GoogleAuthProvider,
-        createUserWithEmailAndPassword,
-        signInWithEmailAndPassword,
-        signInWithPopup,
-    } from "firebase/auth";
+{
+    GithubAuthProvider,
+    GoogleAuthProvider,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    signInWithPopup,
+} from "firebase/auth";
 import { useRouter } from "next/router";
 import { toast } from "react-hot-toast";
 import { supabase } from "./supabase";
@@ -122,13 +122,17 @@ const useAuth = () =>
         // const user = userCredential.user;
         // console.log("User Signed In!!!");
         // console.log(user);
-        const { data, error } = await supabase.auth.signInWithPassword({
+        const res = await supabase.auth.signInWithPassword({
             email,
             password,
-            options: {
-                redirectTo: `${origin}/dashboard`,
-            }
         });
+
+        console.log(res);
+        const { user, session } = res.data;
+        localStorage.setItem("user", JSON.stringify(user));
+        localStorage.setItem("session", JSON.stringify(session));
+        setUser(user);
+        router.push("/dashboard");
 
 
 

@@ -9,15 +9,20 @@ import { useEffect } from "react";
 import { initialData } from "@/src/constants/data";
 import publicUrl from "@/src/utils/publicUrl";
 import { useRouter } from "next/router";
+import { UserAuth } from "@/src/utils/auth";
 const Editor = dynamic(() => import("@/src/components/Editor"), { ssr: false });
 
-function Edit() {
+function Edit()
+{
     const [noteData, setNoteData] = React.useState(null);
     const router = useRouter();
     const { id } = router.query;
+    const { user } = UserAuth();
 
-    useEffect(() => {
-        const fetchData = async () => {
+    useEffect(() =>
+    {
+        const fetchData = async () =>
+        {
             const res = await axios.get(`${publicUrl()}/note/${id}`);
             // console.log("Res", res);
 
@@ -28,10 +33,11 @@ function Edit() {
         };
         fetchData();
     }, []);
-    return <>{noteData && <Editor data={noteData} id={id} />}</>;
+    return <>{noteData && <Editor data={noteData} id={id} user_id={user.id} />}</>;
 }
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps(context)
+{
     return {
         props: {}, // will be passed to the page component as props
     };

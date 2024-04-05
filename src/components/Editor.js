@@ -29,7 +29,7 @@ import Navbar from "./Navbar";
 import { markdownToPlainText } from "../utils/markdown_to_text";
 
 // Our <Editor> component we can reuse later
-export default function Editor({ data, id, pagetalk = false })
+export default function Editor({ data, id, user_id, pagetalk = false })
 {
     //theme
 
@@ -130,6 +130,7 @@ export default function Editor({ data, id, pagetalk = false })
         const md = await editor.blocksToMarkdownLossy(editor.topLevelBlocks);
         const preview = markdownToPlainText(md);
         const res = await axios.put(`${publicUrl()}/note/${id}`, {
+            uid: user_id,
             title:
                 editor.topLevelBlocks.find((block) => block.type === "heading")
                     .content[0].text || "Untitled",

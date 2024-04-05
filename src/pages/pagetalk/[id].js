@@ -10,13 +10,14 @@ import { initialData } from "@/src/constants/data";
 import publicUrl from "@/src/utils/publicUrl";
 import { useRouter } from "next/router";
 const Editor = dynamic(() => import("@/src/components/Editor"), { ssr: false });
+import { UserAuth } from "@/src/utils/auth";
 
 function Edit()
 {
     const [noteData, setNoteData] = React.useState(null);
     const router = useRouter();
     const { id } = router.query;
-
+    const { user } = UserAuth();
     useEffect(() =>
     {
         const fetchData = async () =>
@@ -31,7 +32,7 @@ function Edit()
         };
         fetchData();
     }, []);
-    return <>{noteData && <Editor data={noteData} id={id} pagetalk={true} />}</>;
+    return <>{noteData && <Editor data={noteData} id={id} pagetalk={true} user_id={user.id} />}</>;
 }
 
 export async function getServerSideProps(context)
