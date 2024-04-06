@@ -130,7 +130,7 @@ const Dashboard = () =>
                                         id={note.docId}
                                         category={note.category}
                                         title={note.title}
-                                        content={note.content[1].content.text}
+                                        content={note.content[1]?.content?.text ? note.content[1].content.text : "Content"}
                                         timestamp={note.timestamp}
                                         displayName={user.displayName}
                                         preview={note.preview}
